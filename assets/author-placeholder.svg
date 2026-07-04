@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2A3B63"/>
+      <stop offset="100%" stop-color="#16213A"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="500" fill="url(#sky)"/>
+  <circle cx="320" cy="70" r="34" fill="#F5C344" opacity="0.9"/>
+  <g opacity="0.5" fill="#FBF2DF">
+    <circle cx="60" cy="60" r="2.5"/>
+    <circle cx="110" cy="110" r="1.8"/>
+    <circle cx="200" cy="50" r="2"/>
+    <circle cx="260" cy="140" r="1.6"/>
+    <circle cx="40" cy="160" r="1.8"/>
+    <circle cx="160" cy="90" r="1.4"/>
+  </g>
+  <!-- ground -->
+  <path d="M0,430 C90,400 130,450 220,420 C300,398 350,430 400,410 L400,500 L0,500 Z" fill="#3E5C43"/>
+  <!-- simple child silhouette with umbrella, echoing the book cover -->
+  <g transform="translate(200,300)">
+    <path d="M-70,10 C-70,-55 70,-55 70,10 Z" fill="#C64545"/>
+    <rect x="-3" y="8" width="6" height="70" rx="3" fill="#EADFC8"/>
+    <circle cx="0" cy="120" r="34" fill="#EAD2B4"/>
+    <path d="M-34,140 C-34,190 34,190 34,140 L34,205 C34,225 -34,225 -34,205 Z" fill="#F5C344"/>
+  </g>
+  <text x="200" y="470" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#FBF2DF" opacity="0.75">Add Saara's photo here</text>
+</svg>

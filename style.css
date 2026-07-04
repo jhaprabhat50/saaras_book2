@@ -1,0 +1,487 @@
+/* =========================================================
+   Saara's Book of Stories — Design Tokens
+   Palette drawn straight from the book cover: a rainy dusk
+   sky, a yellow raincoat, and a red umbrella.
+   ========================================================= */
+:root {
+  --navy-deep:   #0E1626;   /* darkest sky / footer */
+  --navy:        #16213A;   /* hero sky base */
+  --navy-soft:   #2A3B63;   /* sky gradient top */
+  --cream:       #FBF2DF;   /* paper / section background */
+  --cream-warm:  #F4E9CE;   /* cards on cream */
+  --ink:         #2B2418;   /* body text on cream */
+  --sun:         #F5C344;   /* raincoat yellow — primary accent */
+  --sun-deep:    #D9A62B;   /* hover state for yellow */
+  --cherry:      #C64545;   /* umbrella red — secondary accent */
+  --leaf:        #4F7A55;   /* sage green — tertiary accent */
+
+  --font-display: 'Fredoka', 'Segoe UI', sans-serif;
+  --font-body:    'Literata', Georgia, 'Times New Roman', serif;
+  --font-hand:    'Caveat', cursive;
+
+  --wrap: 1120px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+
+a { color: inherit; }
+
+.wrap {
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--cherry);
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   Buttons
+   ========================================================= */
+.btn {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 14px 30px;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  border: 2px solid transparent;
+}
+.btn-primary {
+  background: var(--sun);
+  color: var(--navy-deep);
+  box-shadow: 0 6px 0 var(--sun-deep);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 0 var(--sun-deep);
+}
+.btn-primary:active {
+  transform: translateY(2px);
+  box-shadow: 0 3px 0 var(--sun-deep);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--cream);
+  border-color: rgba(251, 242, 223, 0.5);
+}
+.btn-ghost:hover {
+  border-color: var(--cream);
+  background: rgba(251, 242, 223, 0.08);
+}
+.btn-large { padding: 16px 38px; font-size: 1.1rem; }
+
+.hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
+/* =========================================================
+   Nav
+   ========================================================= */
+.site-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 32px;
+  background: linear-gradient(to bottom, rgba(14,22,38,0.75), rgba(14,22,38,0));
+  pointer-events: none;
+}
+.site-nav a { pointer-events: auto; }
+.nav-brand {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--cream);
+  text-decoration: none;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+.nav-links a {
+  color: rgba(251, 242, 223, 0.85);
+  text-decoration: none;
+}
+.nav-links a:hover { color: var(--sun); }
+.nav-cta {
+  background: var(--sun);
+  color: var(--navy-deep) !important;
+  padding: 9px 18px;
+  border-radius: 999px;
+}
+.nav-cta:hover { background: var(--sun-deep); color: var(--navy-deep) !important; }
+
+@media (max-width: 720px) {
+  .nav-links a:not(.nav-cta) { display: none; }
+  .site-nav { padding: 16px 20px; }
+}
+
+/* =========================================================
+   Hero — night sky + flocking paper birds
+   ========================================================= */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  isolation: isolate;
+}
+
+.hero-sky {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 70% 15%, var(--navy-soft) 0%, var(--navy) 45%, var(--navy-deep) 100%);
+  z-index: 0;
+}
+
+.hero-canvas-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+#bird-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.hero-ground {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 22vh;
+  z-index: 2;
+  background: linear-gradient(to bottom, transparent, rgba(14,22,38,0.9) 70%);
+}
+.hero-ground::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 100%, rgba(79,122,85,0.55), transparent 60%),
+    radial-gradient(ellipse at 80% 100%, rgba(79,122,85,0.45), transparent 55%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  color: var(--cream);
+  padding: 0 24px;
+  max-width: 780px;
+}
+
+.eyebrow {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--sun);
+  margin: 0 0 18px;
+}
+.eyebrow-dark { color: var(--cherry); }
+.eyebrow.center, h2.center, .section-intro.center { text-align: center; }
+
+.hero-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.6rem, 7vw, 5rem);
+  line-height: 1.05;
+  margin: 0 0 18px;
+  text-shadow: 0 6px 30px rgba(0,0,0,0.35);
+}
+
+.hero-tagline {
+  font-family: var(--font-hand);
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  color: var(--cream);
+  opacity: 0.92;
+  margin: 0 0 34px;
+}
+
+.scroll-cue {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  width: 26px;
+  height: 42px;
+  border: 2px solid rgba(251,242,223,0.6);
+  border-radius: 14px;
+}
+.scroll-cue span {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  width: 4px;
+  height: 8px;
+  margin-left: -2px;
+  background: var(--sun);
+  border-radius: 2px;
+  animation: scrollcue 1.6s ease infinite;
+}
+@keyframes scrollcue {
+  0% { opacity: 1; transform: translateY(0); }
+  70% { opacity: 0; transform: translateY(14px); }
+  100% { opacity: 0; transform: translateY(14px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-cue span { animation: none; }
+}
+
+/* =========================================================
+   Section rhythm
+   ========================================================= */
+.section { padding: 108px 0; }
+.section h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+  margin: 0 0 20px;
+}
+.section-intro {
+  max-width: 620px;
+  margin: 0 auto 56px;
+  color: rgba(43,36,24,0.75);
+  font-size: 1.08rem;
+}
+
+/* =========================================================
+   About the author
+   ========================================================= */
+.author-grid {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 64px;
+  align-items: center;
+}
+.author-portrait {
+  position: relative;
+}
+.author-portrait img {
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(43,36,24,0.18);
+  transform: rotate(-2deg);
+}
+.portrait-tag {
+  position: absolute;
+  bottom: -16px;
+  right: -16px;
+  background: var(--cherry);
+  color: var(--cream);
+  font-family: var(--font-hand);
+  font-size: 1.15rem;
+  padding: 8px 18px;
+  border-radius: 10px;
+  transform: rotate(4deg);
+  box-shadow: 0 8px 16px rgba(43,36,24,0.2);
+}
+.author-copy h2 { color: var(--navy); }
+.author-copy p { margin: 0 0 18px; }
+.pull-quote {
+  font-family: var(--font-hand);
+  font-size: 1.55rem;
+  line-height: 1.4;
+  color: var(--cherry);
+  margin: 26px 0;
+}
+
+@media (max-width: 860px) {
+  .author-grid { grid-template-columns: 1fr; gap: 40px; }
+  .author-portrait { max-width: 260px; margin: 0 auto; }
+}
+
+/* =========================================================
+   Table of contents
+   ========================================================= */
+.section-toc { background: var(--cream-warm); }
+.section-toc h2 { color: var(--navy); }
+
+.toc-list {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 760px;
+  counter-reset: none;
+}
+.toc-item {
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+  padding: 20px 8px;
+  border-bottom: 1px dashed rgba(43,36,24,0.2);
+}
+.toc-num {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--cherry);
+  width: 2.4ch;
+  flex-shrink: 0;
+}
+.toc-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.15rem;
+  color: var(--navy);
+}
+.toc-item-feature { flex-wrap: wrap; }
+.toc-sublist {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0 0 0 calc(2.4ch + 20px);
+  width: 100%;
+  font-family: var(--font-body);
+  font-style: italic;
+  color: rgba(43,36,24,0.7);
+  font-size: 0.98rem;
+}
+.toc-sublist li { padding: 4px 0; }
+
+/* =========================================================
+   Book showcase
+   ========================================================= */
+.book-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 72px;
+  align-items: center;
+}
+.book-cover-frame { position: relative; justify-self: center; }
+.book-cover-frame img {
+  border-radius: 6px;
+  box-shadow: 0 24px 50px rgba(43,36,24,0.28);
+  transform: rotate(2deg);
+}
+.price-ribbon {
+  position: absolute;
+  top: -14px;
+  left: -14px;
+  background: var(--sun);
+  color: var(--navy-deep);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.92rem;
+  padding: 8px 14px;
+  border-radius: 8px;
+  box-shadow: 0 6px 14px rgba(43,36,24,0.25);
+  transform: rotate(-4deg);
+}
+.book-copy h2 { color: var(--navy); }
+.book-facts {
+  list-style: none;
+  margin: 24px 0 32px;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.book-facts li {
+  padding-left: 26px;
+  position: relative;
+}
+.book-facts li::before {
+  content: "\2726";
+  position: absolute;
+  left: 0;
+  color: var(--leaf);
+}
+
+@media (max-width: 860px) {
+  .book-grid { grid-template-columns: 1fr; gap: 44px; }
+}
+
+/* =========================================================
+   Testimonials
+   ========================================================= */
+.section-words { background: var(--navy-deep); color: var(--cream); }
+.section-words h2 { color: var(--cream); }
+.section-words .section-intro { color: rgba(251,242,223,0.7); }
+
+.words-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 20px;
+}
+.word-card {
+  margin: 0;
+  padding: 30px 28px;
+  background: rgba(251,242,223,0.06);
+  border: 1px solid rgba(251,242,223,0.14);
+  border-radius: 14px;
+}
+.word-card p {
+  margin: 0 0 16px;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+.word-card cite {
+  font-family: var(--font-hand);
+  font-size: 1.25rem;
+  color: var(--sun);
+  font-style: normal;
+}
+
+@media (max-width: 720px) {
+  .words-grid { grid-template-columns: 1fr; }
+}
+
+/* =========================================================
+   Footer
+   ========================================================= */
+.section-footer {
+  background: var(--navy);
+  color: var(--cream);
+  text-align: center;
+  padding: 120px 0;
+}
+.footer-content h2 {
+  color: var(--cream);
+  max-width: 640px;
+  margin: 0 auto 14px;
+}
+.footer-content > p {
+  max-width: 480px;
+  margin: 0 auto 34px;
+  color: rgba(251,242,223,0.75);
+}
+.footer-fine {
+  margin-top: 34px !important;
+  font-family: var(--font-hand);
+  font-size: 1.2rem;
+  color: rgba(251,242,223,0.6);
+}
+
+@media (max-width: 600px) {
+  .section { padding: 76px 0; }
+  .section-footer { padding: 90px 0; }
+}
